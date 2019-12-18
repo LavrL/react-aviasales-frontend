@@ -1,0 +1,67 @@
+.TicketItem {
+    background-color: white;
+}
+
+.TicketItem__items {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+}
+
+.TicketItem__item-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.TicketItem__item-title-price {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+/* .TicketItem__item-title-logo {
+
+} */
+
+.TicketItem__timetable {
+    display: flex;
+    justify-content: space-between;
+}
+
+.TicketItem__timetable-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.TicketItem__timetable-title {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    color: #A0B0B9;
+    text-align: left;
+}
+
+.TicketItem__item-title-price {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    color: #2196F3;
+}
+
+.TicketItem__timetable-text {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #4A4A4A;
+}
