@@ -16,12 +16,12 @@ class TicketItem extends Component {
                     </div>
                     <div className="TicketItem__timetable">
                         <div className="TicketItem__timetable-info">
-                            <span className="TicketItem__timetable-title">MOW - HKT</span>
-                            <span className="TicketItem__timetable-text">10:45 : 08:00</span>
+                            <span className="TicketItem__timetable-title">{this.props.originPlace} - {this.props.destPlace}</span>
+                            <span className="TicketItem__timetable-text">{this.props.timeFrom.substr(11, 5)} : {this.props.timeTo.substr(11, 5)}</span>
                         </div>
                         <div className="TicketItem__timetable-info">
                             <span className="TicketItem__timetable-title">В ПУТИ</span>
-                            <span className="TicketItem__timetable-text">{this.props.duration1} мин</span>
+                            <span className="TicketItem__timetable-text">{Math.floor(this.props.duration1/60)} часов {this.props.duration1 % 60} мин</span>
                         </div>
                         <div className="TicketItem__timetable-info">
                             <span className="TicketItem__timetable-title">пересадок - {this.props.stops1}</span>
@@ -31,12 +31,12 @@ class TicketItem extends Component {
 
                     <div className="TicketItem__timetable">
                         <div className="TicketItem__timetable-info">
-                            <span className="TicketItem__timetable-title">MOW - HKT</span>
-                            <span className="TicketItem__timetable-text">10:45 : 08:00</span>
+                            <span className="TicketItem__timetable-title">{this.props.originPlace} - {this.props.destPlace}</span>
+                            <span className="TicketItem__timetable-text">{this.props.timeFrom.substr(11, 5)} : {this.props.timeTo.substr(11, 5)}</span>
                         </div>
                         <div className="TicketItem__timetable-info">
                             <span className="TicketItem__timetable-title">В ПУТИ</span>
-                            <span className="TicketItem__timetable-text">{this.props.duration2} мин</span>
+                            <span className="TicketItem__timetable-text">{Math.floor(this.props.duration2/60)} часов {this.props.duration2 % 60} мин</span>
                         </div>
                         <div className="TicketItem__timetable-info">
                             <span className="TicketItem__timetable-title">пересадок - {this.props.stops2}</span>

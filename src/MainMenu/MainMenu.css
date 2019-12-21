@@ -28,6 +28,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    padding-left: 0px;
 }
 
 .menu__right {
@@ -71,6 +72,7 @@ input[type="checkbox"] {
 .menu__left-item {
     display: flex;
     width: 100%;
+    
 }
 
 .menu__left-item:hover {

@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './MainMenu.css';
-import TicketItem from '../TicketItem/TicketItem';
+import TicketItem from '../TicketItem';
+import {
+    AVIASALES_SEARCH_URL,
+    AVIASALES_TICKETS_SEARCH_URL,
+    AVIASALES_LOGO_URL
+} from '../constants';
 
 class MainMenu extends Component {
+
+    static propTypes = {
+        getTickets: PropTypes.func,
+        handleInputChange: PropTypes.func,
+        allTransfer: PropTypes.bool,
+        noTransfer: PropTypes.bool,
+        oneTransfer: PropTypes.bool,
+        twoTransfers: PropTypes.bool,
+        threeTransfers: PropTypes.bool,
+        clicked_index: PropTypes.number,
+        cheapest: PropTypes.array,
+        fastest: PropTypes.array
+    };
+
     constructor(props) {
         super(props)
         this.state = {
@@ -43,10 +63,10 @@ class MainMenu extends Component {
 
     getTickets(e) {
         //e.preventDefault();
-        fetch('https://front-test.beta.aviasales.ru/search')
+        fetch(AVIASALES_SEARCH_URL)
             .then(response => response.json())
             .then(result => {
-                fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${result.searchId}`)
+                fetch(`${AVIASALES_TICKETS_SEARCH_URL}=${result.searchId}`)
                     .then(response => response.json())
                     .then(result => {
                         console.log('result = ', result.tickets);
@@ -80,6 +100,31 @@ class MainMenu extends Component {
         const text = ['Самый дешевый', 'Самый быстрый'];
         var size = 5;
         var items = [];
+        const Ex = ({ data }) =>
+            Object.entries(data).map(([k, v]) => (
+                <div className="menu__left-item">
+                    <div className="menu__label" key={k}>
+                        <label>
+                            <input name={k}
+                                type="checkbox"
+                                checked={this.state.v}
+                                onChange={this.handleInputChange} />
+                            {v}
+                        </label>
+                    </div>
+                </div>
+            ));
+
+        const options =
+        {
+            allTransfer: 'Все',
+            noTransfer: 'Без пересадок',
+            oneTransfer: '1 пересадка',
+            twoTransfers: '2 пересадки',
+            threeTransfers: '3 пересадки'
+        }
+            ;
+        console.log('options.allTransfer = ', options[0])
         if (this.state.clicked_index === 0) {
             items = this.state.cheapest.slice(0, size).map((item, i) => {
                 return <TicketItem key={i}
@@ -87,12 +132,19 @@ class MainMenu extends Component {
                     // stops={item.segments[0].stops.length + item.segments[1].stops.length}
                     stops1={item.segments[0].stops.length}
                     stops2={item.segments[1].stops.length}
+
                     stopPlaces1={item.segments[0].stops}
                     stopPlaces2={item.segments[1].stops}
+
+                    originPlace={item.segments[0].origin}
+                    destPlace={item.segments[0].destination}
+
+                    timeFrom={item.segments[0].date}
+                    timeTo={item.segments[1].date}
                     // duration={item.segments[0].duration + item.segments[1].duration}
                     duration1={item.segments[0].duration}
                     duration2={item.segments[1].duration}
-                    logo={`https://pics.avs.io/99/36/${item.carrier}.png` } />
+                    logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
             })
         } else {
             items = this.state.fastest.slice(0, size).map((item, i) => {
@@ -101,12 +153,19 @@ class MainMenu extends Component {
                     // stops={item.segments[0].stops.length + item.segments[1].stops.length} 
                     stops1={item.segments[0].stops.length}
                     stops2={item.segments[1].stops.length}
+
                     stopPlaces1={item.segments[0].stops}
                     stopPlaces2={item.segments[1].stops}
+
+                    originPlace={item.segments[0].origin}
+                    destPlace={item.segments[0].destination}
+
+                    timeFrom={item.segments[0].date}
+                    timeTo={item.segments[1].date}
                     // duration={item.segments[0].duration + item.segments[1].duration}
                     duration1={item.segments[0].duration}
                     duration2={item.segments[1].duration}
-                    logo={`https://pics.avs.io/99/36/${item.carrier}.png` }/>
+                    logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
             })
         }
         if (this.state.oneTransfer || this.state.twoTransfers || this.state.threeTransfers || this.state.noTransfer || this.state.allTransfer) {
@@ -117,19 +176,26 @@ class MainMenu extends Component {
                         ((item.segments[0].stops.length + item.segments[1].stops.length) === 2 && this.state.twoTransfers) ||
                         ((item.segments[0].stops.length + item.segments[1].stops.length) === 3 && this.state.threeTransfers) ||
                         ((item.segments[0].stops.length + item.segments[1].stops.length) === 0 && this.state.noTransfer) ||
-                        ((item.segments[0].stops.length + item.segments[1].stops.length) >= 0 && this.state.allTransfer) )
+                        ((item.segments[0].stops.length + item.segments[1].stops.length) >= 0 && this.state.allTransfer))
                 }).slice(0, size).map((item, i) => {
                     return <TicketItem key={i}
                         price={item.price}
                         // stops={item.segments[0].stops.length + item.segments[1].stops.length} 
                         stops1={item.segments[0].stops.length}
                         stops2={item.segments[1].stops.length}
+
                         stopPlaces1={item.segments[0].stops}
                         stopPlaces2={item.segments[1].stops}
+
+                        originPlace={item.segments[0].origin}
+                        destPlace={item.segments[0].destination}
+
+                        timeFrom={item.segments[0].date}
+                        timeTo={item.segments[1].date}
                         // duration={item.segments[0].duration + item.segments[1].duration} 
                         duration1={item.segments[0].duration}
                         duration2={item.segments[1].duration}
-                        logo={`https://pics.avs.io/99/36/${item.carrier}.png` }/>
+                        logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
                 });
             } else {
                 items = this.state.fastest.filter((item) => {
@@ -137,19 +203,26 @@ class MainMenu extends Component {
                         ((item.segments[0].stops.length + item.segments[1].stops.length) === 2 && this.state.twoTransfers) ||
                         ((item.segments[0].stops.length + item.segments[1].stops.length) === 3 && this.state.threeTransfers) ||
                         ((item.segments[0].stops.length + item.segments[1].stops.length) === 0 && this.state.noTransfer) ||
-                        ((item.segments[0].stops.length + item.segments[1].stops.length) >= 0 && this.state.allTransfer) )
+                        ((item.segments[0].stops.length + item.segments[1].stops.length) >= 0 && this.state.allTransfer))
                 }).slice(0, size).map((item, i) => {
                     return <TicketItem key={i}
                         price={item.price}
                         // stops={item.segments[0].stops.length + item.segments[1].stops.length} 
                         stops1={item.segments[0].stops.length}
                         stops2={item.segments[1].stops.length}
+
                         stopPlaces1={item.segments[0].stops}
                         stopPlaces2={item.segments[1].stops}
+
+                        originPlace={item.segments[0].origin}
+                        destPlace={item.segments[0].destination}
+
+                        timeFrom={item.segments[0].date}
+                        timeTo={item.segments[1].date}
                         //duration={item.segments[0].duration + item.segments[1].duration} 
                         duration1={item.segments[0].duration}
                         duration2={item.segments[1].duration}
-                        logo={`https://pics.avs.io/99/36/${item.carrier}.png` }/>
+                        logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
                 });
             }
         }
@@ -159,7 +232,8 @@ class MainMenu extends Component {
                 <div className="menu__left">
                     <p className="menu__left-title">Количество пересадок</p>
                     <div className="menu__left-items">
-                        <div className="menu__left-item">
+                        {/* <Ex data={options} /> */}
+                        <li className="menu__left-item">
                             <label className="menu__label">
                                 <input name="allTransfer"
                                     type="checkbox"
@@ -167,43 +241,43 @@ class MainMenu extends Component {
                                     onChange={this.handleInputChange} />
                                 Все
                         </label>
-                        </div>
-                        <div className="menu__left-item">
+                        </li>
+                        <li className="menu__left-item">
                             <label className="menu__label">
                                 <input name="noTransfer"
                                     type="checkbox"
                                     checked={this.state.noTransfer}
                                     onChange={this.handleInputChange} />
                                 Без пересадок
-                        </label>
-                        </div>
-                        <div className="menu__left-item">
+                            </label>
+                        </li>
+                        <li className="menu__left-item">
                             <label className="menu__label">
                                 <input name="oneTransfer"
                                     type="checkbox"
                                     checked={this.state.oneTransfer}
                                     onChange={this.handleInputChange} />
                                 1 пересадка
-                        </label>
-                        </div>
-                        <div className="menu__left-item">
+                            </label>
+                        </li>
+                        <li className="menu__left-item">
                             <label className="menu__label">
                                 <input name="twoTransfers"
                                     type="checkbox"
                                     checked={this.state.twoTransfers}
                                     onChange={this.handleInputChange} />
                                 2 пересадки
-                        </label>
-                        </div>
-                        <div className="menu__left-item">
+                            </label>
+                        </li>
+                        <li className="menu__left-item">
                             <label className="menu__label">
                                 <input name="threeTransfers"
                                     type="checkbox"
                                     checked={this.state.threeTransfers}
                                     onChange={this.handleInputChange} />
                                 3 пересадки
-                        </label>
-                        </div>
+                            </label>
+                        </li>
                     </div>
                 </div>
                 <div className="menu__right">
