@@ -44,9 +44,7 @@ class MainMenu extends Component {
         const target = e.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
-        console.log('name = ', name)
-        console.log('value = ', value)
-
+        
         this.setState({
             [name]: value
         });
@@ -100,19 +98,19 @@ class MainMenu extends Component {
         const text = ['Самый дешевый', 'Самый быстрый'];
         var size = 5;
         var items = [];
-        const Ex = ({ data }) =>
+        const MenuOpt = ({ data }) =>
             Object.entries(data).map(([k, v]) => (
-                <div className="menu__left-item">
-                    <div className="menu__label" key={k}>
+                <li className="menu__left-item" key={k}>
+                    <div className="menu__label" >
                         <label>
                             <input name={k}
                                 type="checkbox"
-                                checked={this.state.v}
+                                checked={this.state[k]}
                                 onChange={this.handleInputChange} />
                             {v}
                         </label>
                     </div>
-                </div>
+                </li>
             ));
 
         const options =
@@ -124,12 +122,12 @@ class MainMenu extends Component {
             threeTransfers: '3 пересадки'
         }
             ;
-        console.log('options.allTransfer = ', options[0])
+        console.log('options.allTransfer = ', options.allTransfer)
         if (this.state.clicked_index === 0) {
             items = this.state.cheapest.slice(0, size).map((item, i) => {
                 return <TicketItem key={i}
                     price={item.price}
-                    // stops={item.segments[0].stops.length + item.segments[1].stops.length}
+                    
                     stops1={item.segments[0].stops.length}
                     stops2={item.segments[1].stops.length}
 
@@ -141,7 +139,7 @@ class MainMenu extends Component {
 
                     timeFrom={item.segments[0].date}
                     timeTo={item.segments[1].date}
-                    // duration={item.segments[0].duration + item.segments[1].duration}
+                    
                     duration1={item.segments[0].duration}
                     duration2={item.segments[1].duration}
                     logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
@@ -150,7 +148,7 @@ class MainMenu extends Component {
             items = this.state.fastest.slice(0, size).map((item, i) => {
                 return <TicketItem key={i}
                     price={item.price}
-                    // stops={item.segments[0].stops.length + item.segments[1].stops.length} 
+                     
                     stops1={item.segments[0].stops.length}
                     stops2={item.segments[1].stops.length}
 
@@ -162,14 +160,14 @@ class MainMenu extends Component {
 
                     timeFrom={item.segments[0].date}
                     timeTo={item.segments[1].date}
-                    // duration={item.segments[0].duration + item.segments[1].duration}
+                    
                     duration1={item.segments[0].duration}
                     duration2={item.segments[1].duration}
                     logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
             })
         }
         if (this.state.oneTransfer || this.state.twoTransfers || this.state.threeTransfers || this.state.noTransfer || this.state.allTransfer) {
-            // console.log('threeTransfers, twoTransfers or oneTransfer true');
+            
             if (this.state.clicked_index === 0) {
                 items = this.state.cheapest.filter((item) => {
                     return (((item.segments[0].stops.length + item.segments[1].stops.length) === 1 && this.state.oneTransfer) ||
@@ -180,7 +178,7 @@ class MainMenu extends Component {
                 }).slice(0, size).map((item, i) => {
                     return <TicketItem key={i}
                         price={item.price}
-                        // stops={item.segments[0].stops.length + item.segments[1].stops.length} 
+                        
                         stops1={item.segments[0].stops.length}
                         stops2={item.segments[1].stops.length}
 
@@ -192,7 +190,7 @@ class MainMenu extends Component {
 
                         timeFrom={item.segments[0].date}
                         timeTo={item.segments[1].date}
-                        // duration={item.segments[0].duration + item.segments[1].duration} 
+                        
                         duration1={item.segments[0].duration}
                         duration2={item.segments[1].duration}
                         logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
@@ -207,7 +205,7 @@ class MainMenu extends Component {
                 }).slice(0, size).map((item, i) => {
                     return <TicketItem key={i}
                         price={item.price}
-                        // stops={item.segments[0].stops.length + item.segments[1].stops.length} 
+                        
                         stops1={item.segments[0].stops.length}
                         stops2={item.segments[1].stops.length}
 
@@ -219,7 +217,7 @@ class MainMenu extends Component {
 
                         timeFrom={item.segments[0].date}
                         timeTo={item.segments[1].date}
-                        //duration={item.segments[0].duration + item.segments[1].duration} 
+                        
                         duration1={item.segments[0].duration}
                         duration2={item.segments[1].duration}
                         logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
@@ -231,54 +229,9 @@ class MainMenu extends Component {
             <div className="container">
                 <div className="menu__left">
                     <p className="menu__left-title">Количество пересадок</p>
-                    <div className="menu__left-items">
-                        {/* <Ex data={options} /> */}
-                        <li className="menu__left-item">
-                            <label className="menu__label">
-                                <input name="allTransfer"
-                                    type="checkbox"
-                                    checked={this.state.allTransfer}
-                                    onChange={this.handleInputChange} />
-                                Все
-                        </label>
-                        </li>
-                        <li className="menu__left-item">
-                            <label className="menu__label">
-                                <input name="noTransfer"
-                                    type="checkbox"
-                                    checked={this.state.noTransfer}
-                                    onChange={this.handleInputChange} />
-                                Без пересадок
-                            </label>
-                        </li>
-                        <li className="menu__left-item">
-                            <label className="menu__label">
-                                <input name="oneTransfer"
-                                    type="checkbox"
-                                    checked={this.state.oneTransfer}
-                                    onChange={this.handleInputChange} />
-                                1 пересадка
-                            </label>
-                        </li>
-                        <li className="menu__left-item">
-                            <label className="menu__label">
-                                <input name="twoTransfers"
-                                    type="checkbox"
-                                    checked={this.state.twoTransfers}
-                                    onChange={this.handleInputChange} />
-                                2 пересадки
-                            </label>
-                        </li>
-                        <li className="menu__left-item">
-                            <label className="menu__label">
-                                <input name="threeTransfers"
-                                    type="checkbox"
-                                    checked={this.state.threeTransfers}
-                                    onChange={this.handleInputChange} />
-                                3 пересадки
-                            </label>
-                        </li>
-                    </div>
+                    <ul className="menu__left-items">
+                        <MenuOpt data={options} />
+                    </ul>
                 </div>
                 <div className="menu__right">
                     <div className="menu__right-top">
