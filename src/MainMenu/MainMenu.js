@@ -44,7 +44,7 @@ class MainMenu extends Component {
         const target = e.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
-        
+
         this.setState({
             [name]: value
         });
@@ -120,14 +120,13 @@ class MainMenu extends Component {
             oneTransfer: '1 пересадка',
             twoTransfers: '2 пересадки',
             threeTransfers: '3 пересадки'
-        }
-            ;
-        console.log('options.allTransfer = ', options.allTransfer)
+        };
+
         if (this.state.clicked_index === 0) {
             items = this.state.cheapest.slice(0, size).map((item, i) => {
                 return <TicketItem key={i}
                     price={item.price}
-                    
+
                     stops1={item.segments[0].stops.length}
                     stops2={item.segments[1].stops.length}
 
@@ -139,7 +138,7 @@ class MainMenu extends Component {
 
                     timeFrom={item.segments[0].date}
                     timeTo={item.segments[1].date}
-                    
+
                     duration1={item.segments[0].duration}
                     duration2={item.segments[1].duration}
                     logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
@@ -148,7 +147,7 @@ class MainMenu extends Component {
             items = this.state.fastest.slice(0, size).map((item, i) => {
                 return <TicketItem key={i}
                     price={item.price}
-                     
+
                     stops1={item.segments[0].stops.length}
                     stops2={item.segments[1].stops.length}
 
@@ -160,14 +159,14 @@ class MainMenu extends Component {
 
                     timeFrom={item.segments[0].date}
                     timeTo={item.segments[1].date}
-                    
+
                     duration1={item.segments[0].duration}
                     duration2={item.segments[1].duration}
                     logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
             })
         }
         if (this.state.oneTransfer || this.state.twoTransfers || this.state.threeTransfers || this.state.noTransfer || this.state.allTransfer) {
-            
+
             if (this.state.clicked_index === 0) {
                 items = this.state.cheapest.filter((item) => {
                     return (((item.segments[0].stops.length + item.segments[1].stops.length) === 1 && this.state.oneTransfer) ||
@@ -178,7 +177,7 @@ class MainMenu extends Component {
                 }).slice(0, size).map((item, i) => {
                     return <TicketItem key={i}
                         price={item.price}
-                        
+
                         stops1={item.segments[0].stops.length}
                         stops2={item.segments[1].stops.length}
 
@@ -190,7 +189,7 @@ class MainMenu extends Component {
 
                         timeFrom={item.segments[0].date}
                         timeTo={item.segments[1].date}
-                        
+
                         duration1={item.segments[0].duration}
                         duration2={item.segments[1].duration}
                         logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
@@ -205,7 +204,7 @@ class MainMenu extends Component {
                 }).slice(0, size).map((item, i) => {
                     return <TicketItem key={i}
                         price={item.price}
-                        
+
                         stops1={item.segments[0].stops.length}
                         stops2={item.segments[1].stops.length}
 
@@ -217,7 +216,7 @@ class MainMenu extends Component {
 
                         timeFrom={item.segments[0].date}
                         timeTo={item.segments[1].date}
-                        
+
                         duration1={item.segments[0].duration}
                         duration2={item.segments[1].duration}
                         logo={`${AVIASALES_LOGO_URL}${item.carrier}.png`} />
