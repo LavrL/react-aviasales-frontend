@@ -24,10 +24,6 @@
     line-height: 24px;
 }
 
-/* .TicketItem__item-title-logo {
-
-} */
-
 .TicketItem__timetable {
     display: flex;
     justify-content: space-between;

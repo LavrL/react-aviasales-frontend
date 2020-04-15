@@ -51,7 +51,6 @@ class MainMenu extends Component {
     }
 
     clickHandler = (i) => {
-        console.log(i);
         this.setState({ clicked_index: i })
     }
 
@@ -67,7 +66,6 @@ class MainMenu extends Component {
                 fetch(`${AVIASALES_TICKETS_SEARCH_URL}=${result.searchId}`)
                     .then(response => response.json())
                     .then(result => {
-                        console.log('result = ', result.tickets);
 
                         var cheapest = JSON.parse(JSON.stringify(result.tickets));
                         var fastest = JSON.parse(JSON.stringify(result.tickets));
@@ -80,8 +78,6 @@ class MainMenu extends Component {
                             fastest: fastest
                         })
 
-                        console.log('this.state.cheapest = ', this.state.cheapest);
-                        console.log('this.state.fastest = ', this.state.fastest);
                     })
                     .catch(error => {
                         console.log('Error = ', error);
